@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+Codex 用の並行ワークフローは `AGENTS.md` と `.codex/` を参照する。Claude Code 用の `.claude/` は維持する。
+
 ## Project Overview
 
 汎用テーブルデータ ML パイプライン。Claude Code の Commands・Subagents・Skills・Hooks を活用して、EDA → 特徴量エンジニアリング → モデル学習 → Marp プレゼン資料生成を自動化する。

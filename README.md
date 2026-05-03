@@ -1,6 +1,6 @@
 # ml-agents-trial
 
-Claude Code の Skills・Subagents・Hooks を活用した、テーブルデータ向け機械学習パイプライン。
+Claude Code と Codex のエージェント運用を活用した、テーブルデータ向け機械学習パイプライン。
 
 EDA → 特徴量エンジニアリング → モデル学習 → Marp プレゼン資料生成まで、スラッシュコマンド一つで進められる。
 
@@ -12,10 +12,10 @@ EDA → 特徴量エンジニアリング → モデル学習 → Marp プレゼ
 
 | 役割 | 担当 |
 |---|---|
-| パイプラインの進行・コードレビュー | メインエージェント（Claude） |
+| パイプラインの進行・コードレビュー | メインエージェント（Claude Code または Codex） |
 | 各フェーズのコード生成・実行 | Subagents（専門エージェント） |
-| フェーズ間の引き渡し | Skills（スラッシュコマンド） |
-| 品質保証 | ruff 自動フォーマット（Hook） |
+| フェーズ間の引き渡し | Commands / Skills |
+| 品質保証 | 構造レビュー・ML品質レビュー・ruff |
 
 Subagents はデータの特性に合わせた Python コードを `src/ml_agents_trial/` に書き込む。生成されたコードは通常の Python モジュールとして扱え、`pytest` でテストでき、`ruff` で Lint できる。
 
@@ -23,7 +23,7 @@ Subagents はデータの特性に合わせた Python コードを `src/ml_agent
 
 ## 前提条件
 
-- [Claude Code](https://claude.ai/code) がインストール済み
+- Claude Code または Codex が利用可能
 - [uv](https://docs.astral.sh/uv/) がインストール済み（`uv --version` で確認）
 - Node.js 18 以上（Marp による HTML 変換に使用）
 
@@ -38,23 +38,33 @@ git clone https://github.com/kotaroPurple/ml_agents_trial.git
 cd ml_agents_trial
 ```
 
-### 2. Claude Code を起動
+### 2. Claude Code または Codex を起動
 
 ```bash
 claude
 ```
 
+Codexで使う場合は、このリポジトリをCodexで開き、`AGENTS.md` の指示に従う。
+
 ### 3. セットアップ
+
+Claude Code:
 
 ```
 /setup
+```
+
+Codex:
+
+```
+codex command: setup
 ```
 
 Python 3.12 の仮想環境作成・依存インストール・デモデータ（California Housing）の取得が自動で行われる。
 
 ---
 
-## パイプラインの実行
+## Claude Codeで使う場合
 
 6つのコマンドを順番に実行することで、データ読み込みからプレゼン資料まで完成する。
 
@@ -66,6 +76,33 @@ Python 3.12 の仮想環境作成・依存インストール・デモデータ�
 /evaluate MedHouseVal
 /report
 ```
+
+Claude Code用の定義は `.claude/` にある。
+
+---
+
+## Codexで使う場合
+
+Codex用の入口は `AGENTS.md`、実行手順は `.codex/commands/`、役割定義は `.codex/agents/`、品質基準は `.codex/skills/` にある。`.claude/` は維持し、Codex作業では `.codex/` を参照する。
+
+Codexでは以下のように依頼する。
+
+```
+codex command: setup
+codex command: analyze data/raw/house_prices.csv MedHouseVal
+codex command: engineer MedHouseVal
+codex command: build MedHouseVal
+codex command: evaluate MedHouseVal
+codex command: report
+```
+
+一括実行する場合:
+
+```
+codex command: run-pipeline data/raw/house_prices.csv MedHouseVal
+```
+
+Codex版はClaude Codeのrepo-local slash commandやnamed subagentに依存しない。Codexは `AGENTS.md` から該当command、agent、skill文書を読み、`apply_patch` と `exec_command` で実行する。
 
 ### 各ステップで起きること
 
@@ -162,9 +199,16 @@ ml_agents_trial/
 ├── hooks/
 │   └── on_stop.py           — セッション終了時にリーダーボード表示
 │
-└── .claude/
-    ├── agents/              — Subagent 定義
-    └── commands/            — Skills 定義
+├── .claude/
+│   ├── agents/              — Claude Code Subagent 定義
+│   ├── commands/            — Claude Code command 定義
+│   └── skills/              — Claude Code 品質基準
+│
+├── AGENTS.md                — Codex 用入口
+└── .codex/
+    ├── agents/              — Codex 用役割定義
+    ├── commands/            — Codex 用 command 手順
+    └── skills/              — Codex Skill 形式の品質基準
 ```
 
 ---
