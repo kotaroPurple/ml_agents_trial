@@ -9,8 +9,17 @@
       "Bash(npx @marp-team/marp-cli *)",
       "Bash(mkdir -p *)",
       "Bash(find . *)",
+      "Bash(find src/ *)",
       "Bash(ls *)",
-      "Bash(cat *)"
+      "Bash(cat *)",
+      "Bash(.venv/bin/ruff *)",
+      "Bash(.venv/bin/python -c *)",
+      "Bash(.venv/bin/python src/ *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git status)"
     ]
   },
   "hooks": {

@@ -4,6 +4,9 @@ data/processed/
 artifacts/
 .venv/
 
+# Claude Code: user-specific local settings (machine paths, personal preferences)
+.claude/settings.local.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
