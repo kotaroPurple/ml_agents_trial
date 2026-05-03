@@ -5,9 +5,6 @@ def download(output_path: Path | None = None) -> Path:
     from sklearn.datasets import fetch_california_housing
 
     from ml_agents_trial.core.config import DATA_RAW
-    from ml_agents_trial.core.io import save_json
-
-    import pandas as pd
 
     dest = output_path or (DATA_RAW / "house_prices.csv")
     dest.parent.mkdir(parents=True, exist_ok=True)

@@ -36,13 +36,20 @@ find src/ml_agents_trial/features/ -name "*.py" | sort
 
 問題があれば @feature-engineer に修正を依頼してください。
 
-## Step 4 — 実行・確認
+## Step 4 — ML品質レビュー
+
+@ml-reviewer を呼び出して次の指示を渡してください:
+「`src/ml_agents_trial/features/` と `artifacts/eda/data_summary.json` を確認し、`.claude/skills/tabular-ml-quality.md` と `.claude/skills/artifact-contracts.md` に沿って、ターゲットリーク、ターゲット列変換、全データ統計の利用、EDA根拠との整合性をレビューしてください」
+
+FAIL が返ってきた場合は @feature-engineer に修正を依頼し、Step 2 から再確認してください。
+
+## Step 5 — 実行・確認
 
 ```bash
 .venv/bin/python src/ml_agents_trial/features/engineer.py data/raw/house_prices.csv [TARGET_COLUMN]
 ```
 
-## Step 5 — git コミット
+## Step 6 — git コミット
 
 ```bash
 git add src/ml_agents_trial/features/

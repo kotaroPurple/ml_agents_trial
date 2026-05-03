@@ -14,22 +14,26 @@ description: EDA から Marp スライドまでのパイプラインを一括実
 ## 実行順序
 
 各ステップが完了したことを確認してから次へ進んでください。
-いずれかのステップで失敗した場合はそこで停止し、エラー内容を報告してください。
+いずれかのステップで失敗した場合、または @code-reviewer / @ml-reviewer が FAIL を返した場合はそこで停止し、エラー内容を報告してください。
 
 ### Step 1 — EDA
 `/analyze [CSV_PATH] [TARGET_COLUMN]` スキルを呼び出してください。
 
 ### Step 2 — 特徴量エンジニアリング
 `/engineer [TARGET_COLUMN]` スキルを呼び出してください。
+@ml-reviewer のPASSを確認してから次へ進んでください。
 
 ### Step 3 — モデル学習
 `/build [TARGET_COLUMN]` スキルを呼び出してください。
+@ml-reviewer のPASSを確認してから次へ進んでください。
 
 ### Step 4 — 評価
 `/evaluate [TARGET_COLUMN]` スキルを呼び出してください。
+@ml-reviewer のPASSを確認してから次へ進んでください。
 
 ### Step 5 — レポート生成
 `/report` スキルを呼び出してください。
+@ml-reviewer のPASSを確認してから完了報告に進んでください。
 
 ## 完了報告
 

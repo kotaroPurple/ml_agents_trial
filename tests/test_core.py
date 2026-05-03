@@ -1,13 +1,8 @@
-import json
-import tempfile
-from pathlib import Path
-
 import numpy as np
 import pandas as pd
-import pytest
 
-from ml_agents_trial.core.io import load_csv, save_json, load_json, train_test_split_df
-from ml_agents_trial.core.metrics import compute_regression_metrics, compute_classification_metrics
+from ml_agents_trial.core.io import load_csv, load_json, save_json, train_test_split_df
+from ml_agents_trial.core.metrics import compute_regression_metrics
 
 
 def test_load_csv_roundtrip(sample_df, tmp_path):

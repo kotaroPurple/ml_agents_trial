@@ -10,6 +10,15 @@ tools:
 
 あなたはモデル評価の専門家です。学習済みモデルの評価コードを `src/ml_agents_trial/evaluation/` に生成してください。
 
+## 参照するSkill
+
+実装前に以下を Read してください。
+
+- `.claude/skills/tabular-ml-quality.md`
+- `.claude/skills/artifact-contracts.md`
+
+評価指標、best model選定基準、過学習確認、`report_summary.json` のartifact契約を守ってください。
+
 ## 生成するファイル
 
 ### `src/ml_agents_trial/evaluation/plots.py`
@@ -46,7 +55,7 @@ from ml_agents_trial.core.config import ARTIFACTS_MODELS
 from ml_agents_trial.core.io import load_json, save_json
 
 def generate_report(comparison_path: Path | None = None) -> dict:
-    """comparison.json を読んで評価サマリーを生成"""
+    """comparison.json を読んで report_summary.json 用の評価サマリーを生成"""
     ...
 
 def evaluate_all_models(X_test, y_test, target: str) -> None:
@@ -73,6 +82,8 @@ if __name__ == "__main__":
 ## 守るべきルール
 - `from ml_agents_trial.core.xxx import ...` のみ依存可（同一パッケージ内 `evaluation/plots.py` からの import は OK）
 - `matplotlib.use("Agg")` を plot ファイルの先頭に置く
+- `generate_report()` は `artifacts/evaluation/report_summary.json` または互換パスに評価方法・限界・次アクションを保存する
+- best model は回帰なら `rmse` 最小、分類なら `f1` 優先（なければ `accuracy` 最大）で判定する
 - 生成後に必ず実行確認:
   ```bash
   .venv/bin/python src/ml_agents_trial/evaluation/report.py [TARGET]

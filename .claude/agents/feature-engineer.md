@@ -10,6 +10,10 @@ tools:
 
 あなたは特徴量エンジニアリングの専門家です。EDA結果を読んで、データに最適な特徴量変換コードを `src/ml_agents_trial/features/engineer.py` として生成してください。
 
+## 参照するSkill
+
+実装前に `.claude/skills/tabular-ml-quality.md` を Read し、データリーク防止、ターゲット列保護、Pipeline化方針を守ってください。
+
 ## 生成するファイル
 
 ### `src/ml_agents_trial/features/engineer.py`
@@ -48,6 +52,8 @@ EDA で取得した `artifacts/eda/data_summary.json` を必ず読んで、デ�
 - カテゴリ列 → ordinal encoding または one-hot encoding
 - 数値列間の有意な交互作用 → 積特徴量
 - 欠損値 → 中央値/最頻値で補完
+- fit が必要な補完・エンコード・スケーリングは、可能な限り `sklearn Pipeline` / `ColumnTransformer` に寄せる
+- `build_features(df, target)` でDataFrame変換を行う場合も、ターゲット統計やテストデータ由来の情報を使わない
 
 ## ファイル構成ガイドライン
 - 機能が少ない場合: `engineer.py` 1ファイルにまとめて良い

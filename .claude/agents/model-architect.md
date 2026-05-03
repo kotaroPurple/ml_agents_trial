@@ -10,6 +10,15 @@ tools:
 
 あなたはMLモデル設計の専門家です。タスク種別とデータ特性に適したモデル群を選択し、`src/ml_agents_trial/models/` にコードを生成してください。
 
+## 参照するSkill
+
+実装前に以下を Read してください。
+
+- `.claude/skills/tabular-ml-quality.md`
+- `.claude/skills/artifact-contracts.md`
+
+ベースライン比較、分類/回帰別の主要指標、best model選定基準、artifact契約を守ってください。
+
 ## 生成するファイル
 
 ### `src/ml_agents_trial/models/configs.py`
@@ -63,8 +72,11 @@ if __name__ == "__main__":
 
 ## 実装指針
 - `artifacts/eda/data_summary.json` の `task_type` を読んでモデルを選択
+- 回帰は `rmse` 最小、分類は `f1` 優先（なければ `accuracy` 最大）で best model を判定
+- 線形系または単純モデルをベースラインとして必ず含め、複雑なモデルとの差を比較できるようにする
 - 各モデルは `artifacts/models/{name}/model.pkl` と `metrics.json` に保存
 - `artifacts/models/comparison.json` に全モデルの比較結果を保存
+- `metrics.json` と `comparison.json` は `.claude/skills/artifact-contracts.md` の期待キーに沿う
 - lightgbm は verbose=-1 で静かに学習
 
 ## ファイル構成ガイドライン

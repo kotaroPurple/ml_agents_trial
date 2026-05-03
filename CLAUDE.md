@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-汎用テーブルデータ ML パイプライン。Claude Code の Skills・Subagents・Hooks を活用して、EDA → 特徴量エンジニアリング → モデル学習 → Marp プレゼン資料生成を自動化する。
+汎用テーブルデータ ML パイプライン。Claude Code の Commands・Subagents・Skills・Hooks を活用して、EDA → 特徴量エンジニアリング → モデル学習 → Marp プレゼン資料生成を自動化する。
 分析・特徴量・モデル・評価コードは **subagents が `src/` に生成**する。固定インフラは `src/ml_agents_trial/core/` のみ。
 
 ## Setup
@@ -22,7 +22,7 @@ uv pip install -e ".[dev]"
 | `ruff format src/ tests/` | フォーマット |
 | `ruff check src/ tests/` | Lint |
 
-## Claude Code Skills（実行順）
+## Claude Code Commands（実行順）
 
 | スラッシュコマンド | 説明 |
 |---|---|
@@ -74,9 +74,21 @@ artifacts/             — 実行結果（git管理対象外）
     evaluator.md       — evaluation/ を生成
     reporter.md        — presentation/builder.py を生成
     code-reviewer.md   — 構造チェック専門（import・__main__・ruff）
-  commands/            — Skills 定義
+    ml-reviewer.md     — ML品質チェック専門（リーク・指標・artifact・資料妥当性）
+  commands/            — Slash command 定義
     setup.md / analyze.md / engineer.md / build.md / evaluate.md / report.md
+  skills/              — 共通品質基準
+    tabular-ml-quality.md — データリーク防止・評価指標・ベースライン比較
+    artifact-contracts.md — artifacts JSON の期待キーと互換性ルール
+    ml-reporting.md      — Marp資料の必須構成・限界・次アクション
 ```
+
+## Commands / Subagents / Skills の責務
+
+- Commands: `/analyze`, `/engineer`, `/build`, `/evaluate`, `/report` の実行順序、前提確認、レビュー、実行、コミット手順を定義する。
+- Subagents: 担当領域のコード生成またはレビューを行う。生成系 subagent は `src/` にコードを書き、reviewer は修正指示のみ返す。
+- Skills: 複数 subagent で共有する品質基準を定義する。ML妥当性、artifact契約、資料品質は `.claude/skills/` を参照する。
+- Hooks: Pythonファイル書き込み後のruff自動実行と、セッション終了時処理を担う。
 
 ## Subagent コード生成のルール
 
@@ -84,7 +96,15 @@ artifacts/             — 実行結果（git管理対象外）
 1. `from ml_agents_trial.core.xxx import ...` のみ依存可（他パッケージへの cross-import 禁止）
 2. 各モジュールは `if __name__ == "__main__":` で単独実行できること
 3. 生成後は必ず `.venv/bin/python` で実行して動作確認
-4. @code-reviewer が構造チェック → メインがドメインレビュー → 実行 → git commit
+4. @code-reviewer が構造チェック → メインがドメインレビュー → @ml-reviewer がML品質レビュー → 実行 → git commit
+
+## AI活用上の既知リスク
+
+- ドメイン妥当性: 生成コードが動いても、EDA解釈・特徴量・モデル選択が妥当とは限らない。
+- データリーク: 全データ由来の統計量、ターゲット列変換、テスト情報の利用に注意する。
+- 評価信頼性: 単純なホールドアウトのみでは、過学習や分割依存を見落とす可能性がある。
+- artifact契約不整合: 前段のJSONキー変更により、後段の評価・資料生成が壊れる可能性がある。
+- 自動コミット: AI生成物が品質確認前に履歴へ入らないよう、reviewerのPASS後にコミットする。
 
 ## Git ワークフロー
 
@@ -120,9 +140,17 @@ chore: initial project scaffold
 - EDA 結果と特徴量変換の根拠が一致しているか
 - タスク種別に合ったモデルが選ばれているか
 
+## ml-reviewer の役割
+
+ML品質チェック（sonnet で実行）:
+- `.claude/skills/tabular-ml-quality.md` に沿って、ターゲットリーク、前処理、指標、ベースライン、過学習確認をレビューする
+- `.claude/skills/artifact-contracts.md` に沿って、`data_summary.json`, `comparison.json`, `metrics.json`, `report_summary.json` の整合性を確認する
+- `.claude/skills/ml-reporting.md` に沿って、資料に目的・評価方法・限界・次アクションが含まれるか確認する
+
 ## Key Conventions
 
 - タスク種別は `artifacts/eda/data_summary.json` の `task_type` フィールドで管理（`"regression"` or `"classification"`）
 - 評価指標は `core/metrics.py` の関数を必ず使う（独自実装禁止）
 - artifacts パスは必ず `core/config.py` の定数経由で参照する
+- ML品質基準は `.claude/skills/tabular-ml-quality.md`、artifact契約は `.claude/skills/artifact-contracts.md`、資料品質は `.claude/skills/ml-reporting.md` を参照する
 - Python ファイルを書き込むと ruff が自動実行される（PostToolUse hook）

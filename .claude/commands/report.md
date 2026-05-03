@@ -33,19 +33,26 @@ find src/ml_agents_trial/presentation/ -name "*.py" | sort
 
 問題があれば @reporter に修正を依頼してください。
 
-## Step 4 — builder 実行
+## Step 4 — ML品質レビュー
+
+@ml-reviewer を呼び出して次の指示を渡してください:
+「`src/ml_agents_trial/presentation/`, `src/ml_agents_trial/presentation/templates/base.marp.md`, `artifacts/` 配下のJSONを確認し、`.claude/skills/artifact-contracts.md` と `.claude/skills/ml-reporting.md` に沿って、artifact整合性、評価方法、限界、次アクション、結論の妥当性をレビューしてください」
+
+FAIL が返ってきた場合は @reporter に修正を依頼し、Step 2 から再確認してください。
+
+## Step 5 — builder 実行
 
 ```bash
 .venv/bin/python src/ml_agents_trial/presentation/builder.py
 ```
 
-## Step 5 — Marp HTML 変換
+## Step 6 — Marp HTML 変換
 
 ```bash
 npx --yes @marp-team/marp-cli artifacts/presentation/slides.md --output artifacts/presentation/slides.html
 ```
 
-## Step 6 — git コミット
+## Step 7 — git コミット
 
 ```bash
 git add src/ml_agents_trial/presentation/

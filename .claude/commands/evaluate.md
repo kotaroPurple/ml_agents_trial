@@ -37,19 +37,26 @@ find src/ml_agents_trial/evaluation/ -name "*.py" | sort
 
 問題があれば @evaluator に修正を依頼してください。
 
-## Step 4 — 実行
+## Step 4 — ML品質レビュー
+
+@ml-reviewer を呼び出して次の指示を渡してください:
+「`src/ml_agents_trial/evaluation/`, `artifacts/eda/data_summary.json`, `artifacts/models/comparison.json` を確認し、`.claude/skills/tabular-ml-quality.md` と `.claude/skills/artifact-contracts.md` に沿って、評価設計、過学習確認、best model選定基準、`report_summary.json` の契約、生成プロットの妥当性をレビューしてください」
+
+FAIL が返ってきた場合は @evaluator に修正を依頼し、Step 2 から再確認してください。
+
+## Step 5 — 実行
 
 ```bash
 .venv/bin/python src/ml_agents_trial/evaluation/report.py [TARGET_COLUMN]
 ```
 
-## Step 5 — 生成アーティファクト確認
+## Step 6 — 生成アーティファクト確認
 
 ```bash
 find artifacts/models -name "*.png" | sort
 ```
 
-## Step 6 — git コミット
+## Step 7 — git コミット
 
 ```bash
 git add src/ml_agents_trial/evaluation/

@@ -10,6 +10,15 @@ tools:
 
 あなたはプレゼン資料生成の専門家です。ML実験の結果を読み込み、`src/ml_agents_trial/presentation/builder.py` を生成して Marp スライドを組み立ててください。
 
+## 参照するSkill
+
+実装前に以下を Read してください。
+
+- `.claude/skills/artifact-contracts.md`
+- `.claude/skills/ml-reporting.md`
+
+artifact契約に沿って入力を集約し、資料には目的、評価方法、限界、次アクションを必ず含めてください。
+
 ## 生成するファイル
 
 ### `src/ml_agents_trial/presentation/builder.py`
@@ -44,6 +53,7 @@ if __name__ == "__main__":
 `src/ml_agents_trial/presentation/templates/base.marp.md` が既に存在します。
 `{{TITLE}}`, `{{BEST_MODEL_NAME}}`, `{{MODEL_COMPARISON_ROWS}}` 等のプレースホルダーを置換してください。
 `collect_slide_data()` で全 artifacts を読んで、プレースホルダーマッピングを作ってください。
+`{{CONCLUSIONS}}` と `{{NEXT_STEPS}}` には、評価の前提・限界・次アクションが伝わる内容を含めてください。
 
 ## ファイル構成ガイドライン
 - 基本構成: `builder.py` 1ファイル
@@ -53,6 +63,7 @@ if __name__ == "__main__":
 ## 守るべきルール
 - `from ml_agents_trial.core.xxx import ...` のみ依存可（同一パッケージ内 `presentation/*.py` は OK）
 - 画像パスは `artifacts/presentation/images/` にコピーして相対パスで参照
+- `ml-reporting` の必須項目（目的、データ概要、前処理、評価方法、モデル比較、ベストモデル、限界、次アクション）を資料に含める
 - 生成後に必ず実行確認:
   ```bash
   .venv/bin/python src/ml_agents_trial/presentation/builder.py
