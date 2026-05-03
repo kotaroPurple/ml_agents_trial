@@ -1,9 +1,10 @@
-# Codex Workflow Guide
+# Agent Workflow Guide
 
-This repository supports both Claude Code and Codex.
+This repository supports Claude Code, Codex, and GitHub Copilot.
 
 - Keep `.claude/` intact. It is the Claude Code configuration and must not be edited when implementing Codex-only workflow changes.
 - Use `.codex/` as the Codex workflow source of truth.
+- Use `.github/` as the GitHub Copilot workflow source of truth.
 - Core ML infrastructure lives in `src/ml_agents_trial/core/`; generated phase code lives under `src/ml_agents_trial/{eda,features,models,evaluation,presentation}/`.
 
 ## How To Run Codex Commands
@@ -41,3 +42,30 @@ For generated Python phase code:
 7. Commit only the files owned by that command.
 
 Do not rely on Claude Code hooks or `.claude/settings.json`; Codex commands spell out the required checks.
+
+## How To Use GitHub Copilot
+
+Copilot repository-wide guidance lives in `.github/copilot-instructions.md`.
+
+Copilot reusable prompts live in `.github/prompts/`:
+
+| Prompt | Purpose |
+|---|---|
+| `/ml-setup` | Set up venv, dependencies, and demo data |
+| `/ml-analyze` | Generate EDA modules and artifacts |
+| `/ml-engineer` | Generate feature engineering code |
+| `/ml-build` | Generate training code and train models |
+| `/ml-evaluate` | Generate evaluation modules and plots |
+| `/ml-report` | Generate Marp slides and HTML |
+| `/ml-run-pipeline` | Run the end-to-end workflow |
+
+Copilot quality instructions live in `.github/instructions/`.
+Copilot Agent Skills live in `.github/skills/`; use them for detailed task-specific guidance.
+
+For GitHub Copilot:
+
+- Instructions are short always-on or path-specific rules.
+- Skills are detailed guidance loaded when relevant to a task.
+- Prompts are explicit task workflows invoked from Copilot Chat.
+
+When implementing Copilot-only workflow changes, do not edit `.claude/` or `.codex/`.

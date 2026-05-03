@@ -1,6 +1,6 @@
 # ml-agents-trial
 
-Claude Code と Codex のエージェント運用を活用した、テーブルデータ向け機械学習パイプライン。
+Claude Code、Codex、GitHub Copilot のエージェント運用を活用した、テーブルデータ向け機械学習パイプライン。
 
 EDA → 特徴量エンジニアリング → モデル学習 → Marp プレゼン資料生成まで、スラッシュコマンド一つで進められる。
 
@@ -12,7 +12,7 @@ EDA → 特徴量エンジニアリング → モデル学習 → Marp プレゼ
 
 | 役割 | 担当 |
 |---|---|
-| パイプラインの進行・コードレビュー | メインエージェント（Claude Code または Codex） |
+| パイプラインの進行・コードレビュー | メインエージェント（Claude Code / Codex / GitHub Copilot） |
 | 各フェーズのコード生成・実行 | Subagents（専門エージェント） |
 | フェーズ間の引き渡し | Commands / Skills |
 | 品質保証 | 構造レビュー・ML品質レビュー・ruff |
@@ -23,7 +23,7 @@ Subagents はデータの特性に合わせた Python コードを `src/ml_agent
 
 ## 前提条件
 
-- Claude Code または Codex が利用可能
+- Claude Code、Codex、または GitHub Copilot が利用可能
 - [uv](https://docs.astral.sh/uv/) がインストール済み（`uv --version` で確認）
 - Node.js 18 以上（Marp による HTML 変換に使用）
 
@@ -38,13 +38,13 @@ git clone https://github.com/kotaroPurple/ml_agents_trial.git
 cd ml_agents_trial
 ```
 
-### 2. Claude Code または Codex を起動
+### 2. Claude Code、Codex、または Copilot を起動
 
 ```bash
 claude
 ```
 
-Codexで使う場合は、このリポジトリをCodexで開き、`AGENTS.md` の指示に従う。
+Codexで使う場合は、このリポジトリをCodexで開き、`AGENTS.md` の指示に従う。GitHub Copilotで使う場合は、Copilot Chatで `.github/prompts/` のprompt filesを利用する。
 
 ### 3. セットアップ
 
@@ -58,6 +58,12 @@ Codex:
 
 ```
 codex command: setup
+```
+
+GitHub Copilot:
+
+```
+/ml-setup
 ```
 
 Python 3.12 の仮想環境作成・依存インストール・デモデータ（California Housing）の取得が自動で行われる。
@@ -103,6 +109,33 @@ codex command: run-pipeline data/raw/house_prices.csv MedHouseVal
 ```
 
 Codex版はClaude Codeのrepo-local slash commandやnamed subagentに依存しない。Codexは `AGENTS.md` から該当command、agent、skill文書を読み、`apply_patch` と `exec_command` で実行する。
+
+---
+
+## GitHub Copilotで使う場合
+
+Copilot用の入口は `.github/copilot-instructions.md`、再利用promptは `.github/prompts/`、短い常時ルールは `.github/instructions/`、詳細なAgent Skillsは `.github/skills/` にある。`.claude/` と `.codex/` は維持し、Copilot作業では `.github/` を参照する。
+
+Copilotでは `instructions = 常時/パス別の短い規約`、`skills = 必要時に読み込む詳細手順`、`prompts = 明示実行する作業手順` として使い分ける。
+
+Copilot Chatでは以下のprompt filesを使う。
+
+```
+/ml-setup
+/ml-analyze
+/ml-engineer
+/ml-build
+/ml-evaluate
+/ml-report
+```
+
+一括実行する場合:
+
+```
+/ml-run-pipeline
+```
+
+Prompt filesはGitHub Copilotの環境によってpublic previewまたはIDE依存の機能です。利用するIDEで `.github/prompts/*.prompt.md` が有効か確認してください。
 
 ### 各ステップで起きること
 
@@ -204,11 +237,17 @@ ml_agents_trial/
 │   ├── commands/            — Claude Code command 定義
 │   └── skills/              — Claude Code 品質基準
 │
-├── AGENTS.md                — Codex 用入口
-└── .codex/
-    ├── agents/              — Codex 用役割定義
-    ├── commands/            — Codex 用 command 手順
-    └── skills/              — Codex Skill 形式の品質基準
+├── AGENTS.md                — Codex / Copilot 用入口
+├── .codex/
+│   ├── agents/              — Codex 用役割定義
+│   ├── commands/            — Codex 用 command 手順
+│   └── skills/              — Codex Skill 形式の品質基準
+│
+└── .github/
+    ├── copilot-instructions.md — GitHub Copilot 用全体指示
+    ├── instructions/           — Copilot 用 path-specific instructions
+    ├── skills/                 — Copilot Agent Skills
+    └── prompts/                — Copilot Chat 用 prompt files
 ```
 
 ---
