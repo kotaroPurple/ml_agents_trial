@@ -49,6 +49,11 @@ EDA で取得した `artifacts/eda/data_summary.json` を必ず読んで、デ�
 - 数値列間の有意な交互作用 → 積特徴量
 - 欠損値 → 中央値/最頻値で補完
 
+## ファイル構成ガイドライン
+- 機能が少ない場合: `engineer.py` 1ファイルにまとめて良い
+- 変換ロジックが増えた場合: `encoders.py`, `scalers.py` などに分割して良い
+- `if __name__ == "__main__":` は `engineer.py`（エントリーポイント）のみに記述すれば十分
+
 ## 守るべきルール
 - `build_features(df, target)` のシグネチャを変更しない
 - ターゲット列 (`target`) は変換しない

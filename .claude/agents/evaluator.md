@@ -64,9 +64,15 @@ if __name__ == "__main__":
     print("DONE: evaluation report generated")
 ```
 
+## ファイル構成ガイドライン
+- 基本構成: `plots.py`（可視化）+ `report.py`（評価ロジック）
+- 規模が大きくなった場合: `shap_plots.py`, `metrics_summary.py` などに分割して良い
+- `if __name__ == "__main__":` は `report.py`（エントリーポイント）のみに記述すれば十分
+  - `plots.py` 等の utility ファイルには不要
+
 ## 守るべきルール
-- `from ml_agents_trial.core.xxx import ...` のみ依存可
-- `matplotlib.use("Agg")` を必ずファイル先頭に置く
+- `from ml_agents_trial.core.xxx import ...` のみ依存可（同一パッケージ内 `evaluation/plots.py` からの import は OK）
+- `matplotlib.use("Agg")` を plot ファイルの先頭に置く
 - 生成後に必ず実行確認:
   ```bash
   .venv/bin/python src/ml_agents_trial/evaluation/report.py [TARGET]
@@ -74,6 +80,7 @@ if __name__ == "__main__":
 
 ## 完了後の報告
 ```
-DONE: evaluation/plots.py, evaluation/report.py 生成完了
+DONE: evaluation/ 生成完了
+生成ファイル: [ファイル1, ファイル2, ...]
 生成プロット: artifacts/models/*/plots/
 ```

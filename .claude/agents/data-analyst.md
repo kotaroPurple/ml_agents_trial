@@ -64,9 +64,15 @@ def plot_correlation_heatmap(df: pd.DataFrame, target: str, output_dir: Path) ->
     ...
 ```
 
+## ファイル構成ガイドライン
+- 機能が少ない場合: 1ファイルにまとめて良い
+- 機能が多い場合: 役割ごとに複数ファイルに分割して良い（例: `analysis.py`, `plots.py`, `stats.py` など）
+- `if __name__ == "__main__":` はディレクトリの **エントリーポイント** となる1ファイル（通常 `analysis.py`）に記述すれば十分
+  - utility モジュール（`plots.py` など）には不要
+
 ## 守るべきルール
 - `from ml_agents_trial.core.xxx import ...` のみインポートしてよい（他のパッケージへの依存禁止）
-- `if __name__ == "__main__":` で単独実行できること
+- エントリーポイントファイルは `if __name__ == "__main__":` で単独実行できること
 - 型ヒント必須
 - ファイルを書いたら必ず実行して動作確認すること:
   ```bash

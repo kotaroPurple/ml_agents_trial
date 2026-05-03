@@ -45,8 +45,13 @@ if __name__ == "__main__":
 `{{TITLE}}`, `{{BEST_MODEL_NAME}}`, `{{MODEL_COMPARISON_ROWS}}` 等のプレースホルダーを置換してください。
 `collect_slide_data()` で全 artifacts を読んで、プレースホルダーマッピングを作ってください。
 
+## ファイル構成ガイドライン
+- 基本構成: `builder.py` 1ファイル
+- 規模が大きくなった場合: `slide_sections.py`, `formatters.py` などに分割して良い
+- `if __name__ == "__main__":` は `builder.py`（エントリーポイント）のみに記述すれば十分
+
 ## 守るべきルール
-- `from ml_agents_trial.core.xxx import ...` のみ依存可
+- `from ml_agents_trial.core.xxx import ...` のみ依存可（同一パッケージ内 `presentation/*.py` は OK）
 - 画像パスは `artifacts/presentation/images/` にコピーして相対パスで参照
 - 生成後に必ず実行確認:
   ```bash
@@ -55,6 +60,7 @@ if __name__ == "__main__":
 
 ## 完了後の報告
 ```
-DONE: presentation/builder.py 生成完了
+DONE: presentation/ 生成完了
+生成ファイル: [ファイル1, ファイル2, ...]
 スライド: artifacts/presentation/slides.md
 ```

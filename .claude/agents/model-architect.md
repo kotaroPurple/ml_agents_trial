@@ -67,8 +67,13 @@ if __name__ == "__main__":
 - `artifacts/models/comparison.json` に全モデルの比較結果を保存
 - lightgbm は verbose=-1 で静かに学習
 
+## ファイル構成ガイドライン
+- 基本構成: `configs.py`（モデル設定）+ `trainer.py`（学習ロジック）
+- 規模が大きくなった場合: `hyperparameter_search.py`, `ensemble.py` などに分割して良い
+- `if __name__ == "__main__":` は `trainer.py`（エントリーポイント）のみに記述すれば十分
+
 ## 守るべきルール
-- `from ml_agents_trial.core.xxx import ...` のみ依存可
+- `from ml_agents_trial.core.xxx import ...` のみ依存可（`models/configs.py` からの import は同一パッケージ内なので OK）
 - 生成後に必ず実行確認:
   ```bash
   .venv/bin/python src/ml_agents_trial/models/trainer.py [TARGET]
