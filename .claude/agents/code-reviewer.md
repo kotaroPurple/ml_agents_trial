@@ -22,11 +22,12 @@ find [dir] -name "*.py" -not -path "*__pycache__*" | sort
 ## チェック項目
 
 ### A. import ルール（全ファイル対象）
-各ファイルを Read して、`ml_agents_trial.core` 以外のプロジェクト内パッケージへの cross-import がないか確認する。
-- OK: `from ml_agents_trial.core.config import ...`
+各ファイルを Read して、プロジェクトのコアモジュール以外への cross-import がないか確認する。
+コアモジュール名は CLAUDE.md の「プロジェクト設定」を参照すること（例: `ml_agents_trial.core`）。
+- OK: `from {コアモジュール}.config import ...`
 - OK: `import pandas`, `import numpy`, `from sklearn...` 等の外部ライブラリ
-- OK: 同一パッケージ内の import（例: `from ml_agents_trial.models.configs import ...` を `models/trainer.py` から）
-- NG: 異なる役割ディレクトリへの cross-import（例: `evaluation/` から `from ml_agents_trial.eda import ...`）
+- OK: 同一役割ディレクトリ内の import（例: `models/configs.py` を `models/trainer.py` から）
+- NG: 異なる役割ディレクトリへの cross-import（例: `evaluation/` から `from {パッケージ名}.eda import ...`）
 
 ### B. ruff Lint（全ファイル対象）
 ```bash
@@ -56,7 +57,7 @@ PASS: [ディレクトリまたはファイル]
 FAIL: [ディレクトリまたはファイル]
 チェック済みファイル: [ファイル1, ファイル2, ...]
 問題点:
-- [ファイル名:行番号] A. import ルール違反: `from ml_agents_trial.xxx import ...` は禁止
+- [ファイル名:行番号] A. import ルール違反: 別役割ディレクトリへの cross-import は禁止
 - [ディレクトリ全体] C. __main__ ブロックが1つも存在しない
 - [ファイル名:行番号] B. ruff エラー内容
 

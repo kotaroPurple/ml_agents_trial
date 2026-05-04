@@ -2,7 +2,7 @@
 description: 学習済みモデルの評価コードを src/ml_agents_trial/evaluation/ に生成・実行する。予測 vs 実績・残差プロット・特徴量重要度を生成する。
 ---
 
-`$ARGUMENTS` の形式: `[TARGET_COLUMN]`（未指定: `MedHouseVal`）
+`$ARGUMENTS` の形式: `[TARGET_COLUMN]`（未指定: CLAUDE.md > プロジェクト設定 の「デフォルトターゲット列」）
 
 ## 前提確認
 

@@ -19,12 +19,17 @@ uv pip install -e ".[dev]"
 .venv/bin/python -c "import pandas, sklearn, lightgbm; print('OK')"
 ```
 
-## Step 4: データセット取得（California Housing → CSV）
+## Step 4: データセット取得
+
+CLAUDE.md の「プロジェクト設定 > データ取得コマンド」を実行してください。
+（現在のデフォルト: California Housing → CSV）
 ```bash
 .venv/bin/python -c "from ml_agents_trial.data.datasets.house_prices import download; download()"
 ```
 
 ## Step 5: core モジュール疎通確認
+
+CLAUDE.md の「プロジェクト設定 > ソースパス / デフォルトCSVパス」を参照してください。
 ```bash
 .venv/bin/python -c "
 from ml_agents_trial.core.config import DATA_RAW, ARTIFACTS_EDA

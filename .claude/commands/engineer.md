@@ -2,7 +2,7 @@
 description: EDA結果をもとに src/ml_agents_trial/features/ に特徴量エンジニアリングコードを生成・実行する。データに合った特徴量変換を実装して data/processed/features.csv を出力する。
 ---
 
-`$ARGUMENTS` の形式: `[TARGET_COLUMN]`（未指定: `MedHouseVal`）
+`$ARGUMENTS` の形式: `[TARGET_COLUMN]`（未指定: CLAUDE.md > プロジェクト設定 の「デフォルトターゲット列」）
 
 ## 前提確認
 

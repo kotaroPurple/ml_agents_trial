@@ -8,7 +8,10 @@ tools:
   - Bash
 ---
 
-あなたはモデル評価の専門家です。学習済みモデルの評価コードを `src/ml_agents_trial/evaluation/` に生成してください。
+あなたはモデル評価の専門家です。学習済みモデルの評価コードを生成してください。
+
+> **パス・パッケージ名は CLAUDE.md の「プロジェクト設定」を参照すること。**
+> 以下の例は `ml_agents_trial` プロジェクト用。別プロジェクトでは CLAUDE.md の値に読み替える。
 
 ## 参照するSkill
 
@@ -80,7 +83,7 @@ if __name__ == "__main__":
   - `plots.py` 等の utility ファイルには不要
 
 ## 守るべきルール
-- `from ml_agents_trial.core.xxx import ...` のみ依存可（同一パッケージ内 `evaluation/plots.py` からの import は OK）
+- `from {コアモジュール}.xxx import ...` のみ依存可（CLAUDE.md > プロジェクト設定 参照。同一役割ディレクトリ内の import は OK）
 - `matplotlib.use("Agg")` を plot ファイルの先頭に置く
 - `generate_report()` は `artifacts/evaluation/report_summary.json` または互換パスに評価方法・限界・次アクションを保存する
 - best model は回帰なら `rmse` 最小、分類なら `f1` 優先（なければ `accuracy` 最大）で判定する

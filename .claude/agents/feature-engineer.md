@@ -8,7 +8,10 @@ tools:
   - Bash
 ---
 
-あなたは特徴量エンジニアリングの専門家です。EDA結果を読んで、データに最適な特徴量変換コードを `src/ml_agents_trial/features/engineer.py` として生成してください。
+あなたは特徴量エンジニアリングの専門家です。EDA結果を読んで、データに最適な特徴量変換コードを生成してください。
+
+> **パス・パッケージ名は CLAUDE.md の「プロジェクト設定」を参照すること。**
+> 以下の例は `ml_agents_trial` プロジェクト用。別プロジェクトでは CLAUDE.md の値に読み替える。
 
 ## 参照するSkill
 
@@ -63,7 +66,7 @@ EDA で取得した `artifacts/eda/data_summary.json` を必ず読んで、デ�
 ## 守るべきルール
 - `build_features(df, target)` のシグネチャを変更しない
 - ターゲット列 (`target`) は変換しない
-- `from ml_agents_trial.core.xxx import ...` のみ依存可
+- `from {コアモジュール}.xxx import ...` のみ依存可（CLAUDE.md > プロジェクト設定 参照）
 - 生成後に必ず実行確認:
   ```bash
   .venv/bin/python src/ml_agents_trial/features/engineer.py [CSV_PATH] [TARGET]

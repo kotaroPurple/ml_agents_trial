@@ -3,8 +3,8 @@ description: CSVを分析して src/ml_agents_trial/eda/ にコードを生成�
 ---
 
 `$ARGUMENTS` の形式: `[CSV_PATH] [TARGET_COLUMN]`
-- CSV_PATH 未指定: `data/raw/house_prices.csv`
-- TARGET_COLUMN 未指定: `MedHouseVal`
+- CSV_PATH 未指定: CLAUDE.md > プロジェクト設定 の「デフォルトCSVパス」
+- TARGET_COLUMN 未指定: CLAUDE.md > プロジェクト設定 の「デフォルトターゲット列」
 
 ## Step 1 — subagent によるコード生成
 

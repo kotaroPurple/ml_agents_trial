@@ -4,6 +4,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Codex 用の並行ワークフローは `AGENTS.md` と `.codex/` を参照する。Claude Code 用の `.claude/` は維持する。
 
+## プロジェクト設定（他プロジェクト転用時はここを変更）
+
+| 設定項目 | 値 |
+|---|---|
+| パッケージ名 | `ml_agents_trial` |
+| ソースパス | `src/ml_agents_trial/` |
+| コアモジュール | `ml_agents_trial.core` |
+| デフォルトCSVパス | `data/raw/house_prices.csv` |
+| デフォルトターゲット列 | `MedHouseVal` |
+| データ取得コマンド | `.venv/bin/python -c "from ml_agents_trial.data.datasets.house_prices import download; download()"` |
+
 ## Project Overview
 
 汎用テーブルデータ ML パイプライン。Claude Code の Commands・Subagents・Skills・Hooks を活用して、EDA → 特徴量エンジニアリング → モデル学習 → Marp プレゼン資料生成を自動化する。
@@ -94,8 +105,8 @@ artifacts/             — 実行結果（git管理対象外）
 
 ## Subagent コード生成のルール
 
-各 subagent が `src/` にコードを書くとき:
-1. `from ml_agents_trial.core.xxx import ...` のみ依存可（他パッケージへの cross-import 禁止）
+各 subagent が `src/` にコードを書くとき（パス・パッケージ名は上記「プロジェクト設定」の値を使う）:
+1. `from {コアモジュール}.xxx import ...` のみ依存可（他パッケージへの cross-import 禁止）
 2. 各モジュールは `if __name__ == "__main__":` で単独実行できること
 3. 生成後は必ず `.venv/bin/python` で実行して動作確認
 4. @code-reviewer が構造チェック → メインがドメインレビュー → @ml-reviewer がML品質レビュー → 実行 → git commit
@@ -134,7 +145,7 @@ chore: initial project scaffold
 ## code-reviewer の役割
 
 構造的な品質チェック（haiku で高速・安価に実行）:
-- import が `ml_agents_trial.core` のみに依存しているか
+- import が `{コアモジュール}`（プロジェクト設定参照）のみに依存しているか
 - `if __name__ == "__main__":` ブロックがあるか
 - `ruff check` でエラーがないか
 

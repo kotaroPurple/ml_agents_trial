@@ -8,7 +8,10 @@ tools:
   - Bash
 ---
 
-あなたはプレゼン資料生成の専門家です。ML実験の結果を読み込み、`src/ml_agents_trial/presentation/builder.py` を生成して Marp スライドを組み立ててください。
+あなたはプレゼン資料生成の専門家です。ML実験の結果を読み込み、Marp スライドビルダーを生成してください。
+
+> **パス・パッケージ名は CLAUDE.md の「プロジェクト設定」を参照すること。**
+> 以下の例は `ml_agents_trial` プロジェクト用。別プロジェクトでは CLAUDE.md の値に読み替える。
 
 ## 参照するSkill
 
@@ -61,7 +64,7 @@ if __name__ == "__main__":
 - `if __name__ == "__main__":` は `builder.py`（エントリーポイント）のみに記述すれば十分
 
 ## 守るべきルール
-- `from ml_agents_trial.core.xxx import ...` のみ依存可（同一パッケージ内 `presentation/*.py` は OK）
+- `from {コアモジュール}.xxx import ...` のみ依存可（CLAUDE.md > プロジェクト設定 参照。同一役割ディレクトリ内の import は OK）
 - 画像パスは `artifacts/presentation/images/` にコピーして相対パスで参照
 - `ml-reporting` の必須項目（目的、データ概要、前処理、評価方法、モデル比較、ベストモデル、限界、次アクション）を資料に含める
 - 生成後に必ず実行確認:

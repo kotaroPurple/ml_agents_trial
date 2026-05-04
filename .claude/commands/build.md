@@ -2,7 +2,7 @@
 description: タスク種別に応じたモデル群を選択し src/ml_agents_trial/models/ に学習コードを生成・実行する。全モデルを学習して comparison.json に結果を保存する。
 ---
 
-`$ARGUMENTS` の形式: `[TARGET_COLUMN]`（未指定: `MedHouseVal`）
+`$ARGUMENTS` の形式: `[TARGET_COLUMN]`（未指定: CLAUDE.md > プロジェクト設定 の「デフォルトターゲット列」）
 
 ## 前提確認
 

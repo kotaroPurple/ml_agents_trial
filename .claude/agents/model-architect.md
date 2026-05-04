@@ -8,7 +8,10 @@ tools:
   - Bash
 ---
 
-あなたはMLモデル設計の専門家です。タスク種別とデータ特性に適したモデル群を選択し、`src/ml_agents_trial/models/` にコードを生成してください。
+あなたはMLモデル設計の専門家です。タスク種別とデータ特性に適したモデル群を選択し、モデルコードを生成してください。
+
+> **パス・パッケージ名は CLAUDE.md の「プロジェクト設定」を参照すること。**
+> 以下の例は `ml_agents_trial` プロジェクト用。別プロジェクトでは CLAUDE.md の値に読み替える。
 
 ## 参照するSkill
 
@@ -85,7 +88,7 @@ if __name__ == "__main__":
 - `if __name__ == "__main__":` は `trainer.py`（エントリーポイント）のみに記述すれば十分
 
 ## 守るべきルール
-- `from ml_agents_trial.core.xxx import ...` のみ依存可（`models/configs.py` からの import は同一パッケージ内なので OK）
+- `from {コアモジュール}.xxx import ...` のみ依存可（CLAUDE.md > プロジェクト設定 参照。同一役割ディレクトリ内の import は OK）
 - 生成後に必ず実行確認:
   ```bash
   .venv/bin/python src/ml_agents_trial/models/trainer.py [TARGET]
