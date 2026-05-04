@@ -24,7 +24,9 @@ Implement `src/ml_agents_trial/models/trainer.py`:
 
 ## Rules
 
+- Use `apply_patch` for edits and `exec_command` for validation commands.
 - Use `ml_agents_trial.core.metrics` for metrics.
 - Save each model to `artifacts/models/{name}/model.pkl`.
 - Save each metrics file and `comparison.json` according to artifact contracts.
 - Select best model by lowest `rmse` for regression and highest `f1`/`accuracy` for classification.
+- Do not use Claude-specific tool names, named-agent calls, or hook syntax.

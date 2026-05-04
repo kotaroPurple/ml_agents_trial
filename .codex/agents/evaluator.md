@@ -26,7 +26,9 @@ Implement `src/ml_agents_trial/evaluation/report.py` with:
 
 ## Rules
 
+- Use `apply_patch` for edits and `exec_command` for validation commands.
 - Plot modules must set `matplotlib.use("Agg")` before importing `pyplot`.
 - Generate model plots under `artifacts/models/*/plots/`.
 - Write an evaluation summary compatible with `artifacts/evaluation/report_summary.json` when possible.
 - Preserve artifact contracts and best-model rules.
+- Do not use Claude-specific tool names, named-agent calls, or hook syntax.

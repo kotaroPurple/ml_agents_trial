@@ -19,7 +19,9 @@ Implement `src/ml_agents_trial/eda/plots.py` with:
 ## Rules
 
 - Use `apply_patch` for edits.
+- Use `exec_command` for validation commands and report important output.
 - Use `from ml_agents_trial.core.xxx import ...` for project infrastructure.
 - `plots.py` must use `matplotlib.use("Agg")` before importing `pyplot`.
 - Keep modules standalone and typed.
 - After generation, run `.venv/bin/python src/ml_agents_trial/eda/analysis.py [CSV_PATH] [TARGET_COLUMN]`.
+- Do not use Claude-specific tool names, named-agent calls, or hook syntax.

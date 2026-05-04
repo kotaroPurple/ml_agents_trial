@@ -6,6 +6,7 @@ description: Use for Codex work on tabular ML quality, including leakage prevent
 # Tabular ML Quality
 
 Use this skill when generating or reviewing `features/`, `models/`, or `evaluation/` code.
+Repo-local Codex skills are not assumed to auto-trigger; read this file explicitly when a command or agent lists it as required reading.
 
 ## Core Rules
 

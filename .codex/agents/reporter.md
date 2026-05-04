@@ -19,7 +19,9 @@ Implement `src/ml_agents_trial/presentation/builder.py` with:
 
 ## Rules
 
+- Use `apply_patch` for edits and `exec_command` for validation commands.
 - Replace all Marp placeholders.
 - Copy images to `artifacts/presentation/images/` and reference relative paths.
 - Include purpose, dataset overview, preprocessing, evaluation method, model comparison, best model, limitations, and next actions.
 - Do not overstate conclusions beyond available metrics.
+- Do not use Claude-specific tool names, named-agent calls, or hook syntax.

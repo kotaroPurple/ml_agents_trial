@@ -10,6 +10,13 @@ This repository supports Claude Code, Codex, and GitHub Copilot.
 ## How To Run Codex Commands
 
 When the user asks for `codex command: <name> ...`, read the matching file in `.codex/commands/` and follow it exactly.
+The `.codex/` tree is the Codex source of truth; do not infer Codex behavior from `.claude/` unless the user explicitly asks to update the migration.
+
+Example:
+
+```text
+codex command: analyze data/raw/house_prices.csv MedHouseVal
+```
 
 Available commands:
 
@@ -28,6 +35,7 @@ Available commands:
 - Commands define the ordered workflow, checks, execution, and commit policy.
 - Agents are role prompts. In Codex, read `.codex/agents/<role>.md` and perform that role yourself unless the user explicitly asks for parallel subagents.
 - Skills are reusable quality standards. Repo-local skills are not assumed to auto-trigger; command and agent docs explicitly name which `.codex/skills/*/SKILL.md` files to read.
+- `.claude/` remains the Claude Code source of truth. Codex-only workflow changes should not edit `.claude/`.
 
 ## Review Flow
 

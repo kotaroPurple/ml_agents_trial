@@ -10,6 +10,8 @@ Read the relevant skills before reviewing:
 - `.codex/skills/artifact-contracts/SKILL.md`
 - `.codex/skills/ml-reporting/SKILL.md` for presentation/report review.
 
+Use `exec_command` only for read-only inspection commands. Do not edit files, stage files, commit files, or use Claude-specific named-agent or hook syntax while acting as this reviewer.
+
 ## Checks
 
 - `features/`: target leakage, target-column mutation, all-data statistics, EDA consistency.

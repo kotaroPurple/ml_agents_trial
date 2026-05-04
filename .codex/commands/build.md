@@ -15,13 +15,16 @@ Generate model training code and train all configured models.
    - `.codex/agents/model-architect.md`
    - `.codex/skills/tabular-ml-quality/SKILL.md`
    - `.codex/skills/artifact-contracts/SKILL.md`
-3. Act as `model-architect` and implement `src/ml_agents_trial/models/configs.py` and `src/ml_agents_trial/models/trainer.py`.
+3. Act as `model-architect` and implement `src/ml_agents_trial/models/configs.py` and `src/ml_agents_trial/models/trainer.py` using `apply_patch`.
 4. Act as `code-reviewer` by reading `.codex/agents/code-reviewer.md` and checking `src/ml_agents_trial/models/`.
+   - If review returns FAIL, fix the reported issues as `model-architect`, then repeat this review before continuing.
 5. Domain review:
    - Models match `artifacts/eda/data_summary.json` task type.
    - Metrics use `ml_agents_trial.core.metrics`.
    - Each model saves `model.pkl` and `metrics.json`.
+   - If review fails, fix the issue and return to step 4.
 6. Act as `ml-reviewer` by reading `.codex/agents/ml-reviewer.md` and checking model selection, baseline comparison, metrics, best-model rule, and artifact contracts.
+   - If review returns FAIL, fix the reported issues as `model-architect`, then repeat steps 4-6.
 7. Execute:
 
 ```bash
@@ -42,3 +45,9 @@ git commit -m "feat(models): generate model configs and trainer"
 ```
 
 10. Report comparison table, best model, commit hash, and next command.
+
+## Codex Notes
+
+- This command is invoked as `codex command: build [TARGET_COLUMN]`; it is not a slash command.
+- Do not use Claude-specific named-agent calls, hooks, or settings files.
+- Use `exec_command` for shell validation and commit only the files named in this command.

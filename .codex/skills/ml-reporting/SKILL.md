@@ -6,6 +6,7 @@ description: Use for Codex work that builds or reviews Marp slides for ML experi
 # ML Reporting
 
 Use this skill when generating or reviewing presentation code and slide content.
+Repo-local Codex skills are not assumed to auto-trigger; read this file explicitly when a command or agent lists it as required reading.
 
 ## Required Content
 

@@ -6,6 +6,7 @@ description: Use for Codex work that reads or writes ML pipeline artifacts JSON 
 # Artifact Contracts
 
 Use this skill when generating or reviewing models, evaluation, or presentation code.
+Repo-local Codex skills are not assumed to auto-trigger; read this file explicitly when a command or agent lists it as required reading.
 
 ## General Rules
 

@@ -39,3 +39,9 @@ uv pip install -e ".[dev]"
 ```
 
 6. Commit setup files only if this is an initial scaffold workflow and the user expects a commit. Otherwise report versions and dataset shape.
+
+## Codex Notes
+
+- This command is invoked as `codex command: setup`; it is not a slash command.
+- Do not use Claude-specific hooks or settings files.
+- Use `exec_command` for shell validation.

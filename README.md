@@ -90,6 +90,7 @@ Claude Code用の定義は `.claude/` にある。
 ## Codexで使う場合
 
 Codex用の入口は `AGENTS.md`、実行手順は `.codex/commands/`、役割定義は `.codex/agents/`、品質基準は `.codex/skills/` にある。`.claude/` は維持し、Codex作業では `.codex/` を参照する。
+Codexでは `.codex/` が正本であり、Claude Code用の `.claude/` は参照・変更しない。
 
 Codexでは以下のように依頼する。
 
@@ -109,6 +110,7 @@ codex command: run-pipeline data/raw/house_prices.csv MedHouseVal
 ```
 
 Codex版はClaude Codeのrepo-local slash commandやnamed subagentに依存しない。Codexは `AGENTS.md` から該当command、agent、skill文書を読み、`apply_patch` と `exec_command` で実行する。
+各commandは構造レビュー、必要なML品質レビュー、実行確認、対象ファイルのみのcommit手順を含む。
 
 ---
 

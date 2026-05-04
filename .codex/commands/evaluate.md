@@ -15,13 +15,16 @@ Generate model evaluation modules and plots.
    - `.codex/agents/evaluator.md`
    - `.codex/skills/tabular-ml-quality/SKILL.md`
    - `.codex/skills/artifact-contracts/SKILL.md`
-3. Act as `evaluator` and implement `src/ml_agents_trial/evaluation/plots.py` and `src/ml_agents_trial/evaluation/report.py`.
+3. Act as `evaluator` and implement `src/ml_agents_trial/evaluation/plots.py` and `src/ml_agents_trial/evaluation/report.py` using `apply_patch`.
 4. Act as `code-reviewer` by reading `.codex/agents/code-reviewer.md` and checking `src/ml_agents_trial/evaluation/`.
+   - If review returns FAIL, fix the reported issues as `evaluator`, then repeat this review before continuing.
 5. Domain review:
    - Plot modules set `matplotlib.use("Agg")`.
    - Plot functions accept `Path` output paths.
    - `generate_report()` records evaluation method, limitations, and next steps when possible.
+   - If review fails, fix the issue and return to step 4.
 6. Act as `ml-reviewer` by reading `.codex/agents/ml-reviewer.md` and checking evaluation design, overfitting checks, best-model rule, `report_summary.json`, and plot relevance.
+   - If review returns FAIL, fix the reported issues as `evaluator`, then repeat steps 4-6.
 7. Execute:
 
 ```bash
@@ -48,3 +51,9 @@ git commit -m "feat(evaluation): generate evaluation modules"
 ```
 
 11. Report generated plots, commit hash, and next command.
+
+## Codex Notes
+
+- This command is invoked as `codex command: evaluate [TARGET_COLUMN]`; it is not a slash command.
+- Do not use Claude-specific named-agent calls, hooks, or settings files.
+- Use `exec_command` for shell validation and commit only the files named in this command.

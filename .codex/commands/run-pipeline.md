@@ -19,6 +19,7 @@ Run the whole ML pipeline from EDA to Marp slides.
 6. Run `codex command: report`.
 
 Stop immediately if any command fails, if `code-reviewer` fails, or if `ml-reviewer` fails.
+Do not continue to later phases until the failing command has been fixed, rerun, and committed.
 
 ## Completion Report
 
@@ -33,3 +34,9 @@ Report:
 - Best model and primary metric.
 - Generated slides: `artifacts/presentation/slides.html`.
 - Any residual validation risks.
+
+## Codex Notes
+
+- This command is invoked as `codex command: run-pipeline [CSV_PATH] [TARGET_COLUMN]`; it is not a slash command.
+- Run each phase by reading its `.codex/commands/*.md` file and following its required agent/skill references.
+- Do not use Claude-specific named-agent calls, hooks, or settings files.

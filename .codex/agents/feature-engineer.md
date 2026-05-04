@@ -20,4 +20,6 @@ Implement `src/ml_agents_trial/features/engineer.py` with:
 - Avoid target leakage and test-data statistics.
 - Use EDA-backed transformations only.
 - Prefer Pipeline/ColumnTransformer for fit-dependent preprocessing where the existing interface allows it.
-- Use `apply_patch` for edits and run the module after generation.
+- Use `apply_patch` for edits and `exec_command` for validation commands.
+- Run the module after generation and report the output file shape.
+- Do not use Claude-specific tool names, named-agent calls, or hook syntax.

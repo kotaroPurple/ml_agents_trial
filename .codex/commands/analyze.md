@@ -13,11 +13,13 @@ Analyze a CSV and generate EDA modules/artifacts.
 
 1. Confirm `[CSV_PATH]` exists.
 2. Read `.codex/agents/data-analyst.md`.
-3. Act as `data-analyst` and implement `src/ml_agents_trial/eda/analysis.py` and `src/ml_agents_trial/eda/plots.py`.
+3. Act as `data-analyst` and implement `src/ml_agents_trial/eda/analysis.py` and `src/ml_agents_trial/eda/plots.py` using `apply_patch`.
 4. Act as `code-reviewer` by reading `.codex/agents/code-reviewer.md` and checking `src/ml_agents_trial/eda/`.
+   - If review returns FAIL, fix the reported issues as `data-analyst`, then repeat this review before continuing.
 5. Domain review:
    - `summarize_dataset`, `detect_task_type`, and `find_top_features` exist.
    - `detect_task_type` uses target dtype and cardinality reasonably.
+   - If review fails, fix the issue and return to step 4.
 6. Execute:
 
 ```bash
@@ -39,3 +41,9 @@ git commit -m "feat(eda): generate EDA modules"
 ```
 
 9. Report data shape, missing values, task type, top 5 features, commit hash, and next command.
+
+## Codex Notes
+
+- This command is invoked as `codex command: analyze [CSV_PATH] [TARGET_COLUMN]`; it is not a slash command.
+- Do not use Claude-specific named-agent calls, hooks, or settings files.
+- Use `exec_command` for shell validation and commit only the files named in this command.
