@@ -36,7 +36,8 @@ find src/ml_agents_trial/presentation/ -name "*.py" | sort
 ## Step 4 — ML品質レビュー
 
 @ml-reviewer を呼び出して次の指示を渡してください:
-「`src/ml_agents_trial/presentation/`, `src/ml_agents_trial/presentation/templates/base.marp.md`, `artifacts/` 配下のJSONを確認し、`.claude/skills/artifact-contracts.md` と `.claude/skills/ml-reporting.md` に沿って、artifact整合性、評価方法、限界、次アクション、結論の妥当性をレビューしてください」
+「`report` フェーズの ML 品質レビューを実施してください。
+対象: `src/ml_agents_trial/presentation/`, `src/ml_agents_trial/presentation/templates/base.marp.md`, `artifacts/`」
 
 FAIL が返ってきた場合は @reporter に修正を依頼し、Step 2 から再確認してください。
 

@@ -40,7 +40,8 @@ find src/ml_agents_trial/evaluation/ -name "*.py" | sort
 ## Step 4 — ML品質レビュー
 
 @ml-reviewer を呼び出して次の指示を渡してください:
-「`src/ml_agents_trial/evaluation/`, `artifacts/eda/data_summary.json`, `artifacts/models/comparison.json` を確認し、`.claude/skills/tabular-ml-quality.md` と `.claude/skills/artifact-contracts.md` に沿って、評価設計、過学習確認、best model選定基準、`report_summary.json` の契約、生成プロットの妥当性をレビューしてください」
+「`evaluation` フェーズの ML 品質レビューを実施してください。
+対象: `src/ml_agents_trial/evaluation/`, `artifacts/eda/data_summary.json`, `artifacts/models/comparison.json`」
 
 FAIL が返ってきた場合は @evaluator に修正を依頼し、Step 2 から再確認してください。
 

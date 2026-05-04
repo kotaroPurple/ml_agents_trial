@@ -1,6 +1,7 @@
 ---
 name: ml-reporting
 description: ML実験結果をMarp資料にまとめる際の必須構成、表現、限界事項、次アクションを標準化するSkill。
+user-invocable: false
 ---
 
 # ml-reporting

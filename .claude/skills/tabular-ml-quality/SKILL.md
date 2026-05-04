@@ -1,6 +1,7 @@
 ---
 name: tabular-ml-quality
 description: 汎用テーブルデータMLで、データリーク防止、前処理、モデル比較、評価指標、過学習確認を標準化する品質Skill。
+user-invocable: false
 ---
 
 # tabular-ml-quality

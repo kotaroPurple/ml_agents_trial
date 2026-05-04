@@ -11,26 +11,46 @@ tools:
 
 ## 参照するSkill
 
-レビュー前に必要に応じて以下を Read してください。
+フェーズに応じて以下の SKILL.md を Read してから判断してください。
 
-- `.claude/skills/tabular-ml-quality.md`
-- `.claude/skills/artifact-contracts.md`
-- `.claude/skills/ml-reporting.md`
+| フェーズ | 読む SKILL.md |
+|---|---|
+| eda | artifact-contracts |
+| features | tabular-ml-quality, artifact-contracts |
+| models | tabular-ml-quality, artifact-contracts |
+| evaluation | tabular-ml-quality, artifact-contracts |
+| report | artifact-contracts, ml-reporting |
 
-## チェック対象
+Skill ファイルのパス:
+- `.claude/skills/tabular-ml-quality/SKILL.md`
+- `.claude/skills/artifact-contracts/SKILL.md`
+- `.claude/skills/ml-reporting/SKILL.md`
 
-依頼で指定されたディレクトリ、ファイル、artifactを確認してください。
+## フェーズ別チェック対象
 
-- `src/ml_agents_trial/features/`: ターゲットリーク、全データ統計の利用、ターゲット列変換、EDA根拠との整合性。
-- `src/ml_agents_trial/models/`: タスク種別、モデル選択、ベースライン、指標、best model選定基準、metrics保存。
-- `src/ml_agents_trial/evaluation/`: 評価方法、過学習確認、プロット、`report_summary.json`、artifact契約。
-- `src/ml_agents_trial/presentation/`: artifact契約、評価方法、限界、次アクション、結論の妥当性。
+### eda フェーズ
+- `artifacts/eda/data_summary.json` の必須キー存在確認（shape, dtypes, missing_values, task_type, top_features）
+
+### features フェーズ
+- ターゲットリーク、ターゲット列変換、全データ統計の利用、EDA根拠との整合性
+
+### models フェーズ
+- タスク種別とモデル選択の一致、ベースライン比較、評価指標、best model選定基準
+- metrics.json / comparison.json の artifact 契約
+
+### evaluation フェーズ
+- 評価方法の妥当性、過学習確認
+- report_summary.json の必須キー（evaluation_method, limitations, next_steps を含む）
+
+### report フェーズ
+- artifact 整合性、評価方法・限界・次アクション・結論の妥当性
+- best model の主張が comparison.json の指標と一致しているか
 
 ## PASS 条件
 
 - ターゲットリークが見当たらない。
 - タスク種別とモデル、指標、best model選定基準が一致している。
-- 後続ステップが読むartifactの主要キーが生成またはfallbackされる。
+- 後続ステップが読む artifact の主要キーが生成またはfallbackされる。
 - 資料には目的、評価方法、限界、次アクションが含まれる。
 - 評価条件を超えた断定がない。
 
@@ -39,7 +59,7 @@ tools:
 ### PASS の場合
 
 ```
-PASS: [対象]
+PASS: [フェーズ] [対象]
 - リーク確認: OK
 - 指標・モデル選定: OK
 - artifact契約: OK
@@ -51,7 +71,7 @@ PASS: [対象]
 ### FAIL の場合
 
 ```
-FAIL: [対象]
+FAIL: [フェーズ] [対象]
 問題点:
 - [ファイル名:行番号またはartifact] [内容]
 

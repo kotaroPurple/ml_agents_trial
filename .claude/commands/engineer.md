@@ -39,7 +39,8 @@ find src/ml_agents_trial/features/ -name "*.py" | sort
 ## Step 4 — ML品質レビュー
 
 @ml-reviewer を呼び出して次の指示を渡してください:
-「`src/ml_agents_trial/features/` と `artifacts/eda/data_summary.json` を確認し、`.claude/skills/tabular-ml-quality.md` と `.claude/skills/artifact-contracts.md` に沿って、ターゲットリーク、ターゲット列変換、全データ統計の利用、EDA根拠との整合性をレビューしてください」
+「`features` フェーズの ML 品質レビューを実施してください。
+対象: `src/ml_agents_trial/features/`, `artifacts/eda/data_summary.json`」
 
 FAIL が返ってきた場合は @feature-engineer に修正を依頼し、Step 2 から再確認してください。
 

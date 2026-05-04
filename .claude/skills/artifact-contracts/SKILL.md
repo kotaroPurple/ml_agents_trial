@@ -1,6 +1,7 @@
 ---
 name: artifact-contracts
 description: Claude Code ML Pipeline の各段階が読み書きする artifacts JSON の期待キー、意味、互換性ルールを定義するSkill。
+user-invocable: false
 ---
 
 # artifact-contracts
