@@ -5,8 +5,8 @@ description: "Generate EDA modules and artifacts for a CSV target"
 
 # ML Analyze
 
-CSV path: `${input:csv_path:data/raw/house_prices.csv}`
-Target column: `${input:target_column:MedHouseVal}`
+CSV path: `${input:csv_path:data/raw/house_prices.csv}` (default from copilot-instructions.md > プロジェクト設定)
+Target column: `${input:target_column:MedHouseVal}` (default from copilot-instructions.md > プロジェクト設定)
 
 Use:
 
@@ -22,9 +22,11 @@ Act as the data analyst for this repository.
 ## Tasks
 
 1. Confirm the CSV exists.
-2. Implement `src/ml_agents_trial/eda/analysis.py` with `summarize_dataset`, `detect_task_type`, `find_top_features`, and a `__main__` block.
-3. Implement `src/ml_agents_trial/eda/plots.py` with distribution and correlation plots.
-4. Structurally review imports, ruff, and `__main__`.
+2. Implement EDA modules in `src/ml_agents_trial/eda/` (file structure may vary by complexity):
+   - Required public functions: `summarize_dataset`, `detect_task_type`, `find_top_features`, `plot_distributions`, `plot_correlation_heatmap`.
+   - At least one file must have a `__main__` block.
+3. Structurally review: run `/ml-code-review` with target=`src/ml_agents_trial/eda/`. Return to implementation if FAIL.
+4. ML quality review: run `/ml-quality-review` with phase=`eda`, target=`artifacts/eda/data_summary.json`. Return to implementation if FAIL.
 5. Run:
 
 ```bash
@@ -33,5 +35,14 @@ Act as the data analyst for this repository.
 
 6. Generate EDA plots.
 7. Run `uv run ruff check src/ tests/`.
-8. Commit only `src/ml_agents_trial/eda/` with `feat(eda): generate EDA modules`.
-9. Report shape, missing values, task type, top features, commit hash, and next step.
+8. Commit only `src/ml_agents_trial/eda/` with:
+
+```bash
+git add src/ml_agents_trial/eda/
+STAGED=$(git diff --name-only --cached | grep 'ml_agents_trial/eda/' | sed 's|src/ml_agents_trial/eda/||')
+git commit -m "feat(eda): generate EDA modules
+
+$(echo "$STAGED" | sed 's/^/- /')"
+```
+
+9. Report shape, missing values, task type, top features, commit hash, and next step (`/ml-engineer`).

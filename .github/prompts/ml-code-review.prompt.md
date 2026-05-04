@@ -22,10 +22,10 @@ Do not edit files. Return PASS or FAIL with concrete fix instructions.
 find ${input:target_path:src/ml_agents_trial/} -name "*.py" -not -path "*__pycache__*" | sort
 ```
 
-2. Check imports:
-   - `ml_agents_trial.core.*` is allowed.
+2. Check imports (core module from copilot-instructions.md > プロジェクト設定):
+   - `{core module}.*` is allowed.
    - External packages are allowed.
-   - Same-package imports are allowed.
+   - Same phase-directory imports are allowed.
    - Cross-imports between generated phase directories are not allowed.
 3. Run ruff on the target.
 4. Confirm at least one `if __name__ == "__main__":` exists when reviewing a generated phase directory.

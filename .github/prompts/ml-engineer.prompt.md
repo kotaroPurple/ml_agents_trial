@@ -5,7 +5,7 @@ description: "Generate feature engineering code from EDA artifacts"
 
 # ML Engineer
 
-Target column: `${input:target_column:MedHouseVal}`
+Target column: `${input:target_column:MedHouseVal}` (default from copilot-instructions.md > プロジェクト設定)
 
 Use:
 
@@ -22,16 +22,26 @@ Act as the feature engineer for this repository.
 ## Tasks
 
 1. Confirm `artifacts/eda/data_summary.json` exists.
-2. Implement `src/ml_agents_trial/features/engineer.py` with `build_features(df, target)` and a `__main__` block.
-3. Do not transform the target column. Avoid target leakage and all-data statistics.
-4. Structurally review imports, ruff, and `__main__`.
-5. Perform ML quality review for leakage, target mutation, and EDA consistency. Return to implementation if review fails.
-6. Run:
+2. Implement feature engineering modules in `src/ml_agents_trial/features/` (file structure may vary by complexity):
+   - Required public function: `build_features(df, target) -> pd.DataFrame`.
+   - Do not transform the target column. Avoid target leakage and all-data statistics.
+3. Structurally review: run `/ml-code-review` with target=`src/ml_agents_trial/features/`. Return to implementation if FAIL.
+4. ML quality review: run `/ml-quality-review` with phase=`features`, target=`src/ml_agents_trial/features/`. Return to implementation if FAIL.
+5. Run:
 
 ```bash
-.venv/bin/python src/ml_agents_trial/features/engineer.py data/raw/house_prices.csv ${input:target_column:MedHouseVal}
+.venv/bin/python src/ml_agents_trial/features/engineer.py ${input:csv_path:data/raw/house_prices.csv} ${input:target_column:MedHouseVal}
 ```
 
-7. Run `uv run ruff check src/ tests/`.
-8. Commit only `src/ml_agents_trial/features/` with `feat(features): generate feature engineering module`.
-9. Report added features, processed CSV shape, commit hash, and next step.
+6. Run `uv run ruff check src/ tests/`.
+7. Commit only `src/ml_agents_trial/features/` with:
+
+```bash
+git add src/ml_agents_trial/features/
+STAGED=$(git diff --name-only --cached | grep 'ml_agents_trial/features/' | sed 's|src/ml_agents_trial/features/||')
+git commit -m "feat(features): generate feature engineering module
+
+$(echo "$STAGED" | sed 's/^/- /')"
+```
+
+8. Report added features, processed CSV shape, commit hash, and next step (`/ml-build`).

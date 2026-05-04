@@ -5,7 +5,7 @@ description: "Generate model training code and train configured models"
 
 # ML Build
 
-Target column: `${input:target_column:MedHouseVal}`
+Target column: `${input:target_column:MedHouseVal}` (default from copilot-instructions.md > プロジェクト設定)
 
 Use:
 
@@ -25,17 +25,27 @@ Act as the model architect for this repository.
 
 1. Confirm `data/processed/features.csv` exists.
 2. Read `artifacts/eda/data_summary.json` for `task_type`.
-3. Implement `src/ml_agents_trial/models/configs.py` and `src/ml_agents_trial/models/trainer.py`.
-4. Include a baseline and task-appropriate models.
-5. Save each `model.pkl`, each `metrics.json`, and `artifacts/models/comparison.json`.
-6. Structurally review imports, ruff, and `__main__`.
-7. Perform ML quality review for model choice, metrics, best-model rule, and artifacts. Return to implementation if review fails.
-8. Run:
+3. Implement model modules in `src/ml_agents_trial/models/` (file structure may vary by complexity):
+   - Required public functions: `train_model(name, config, X_train, y_train, X_test, y_test) -> dict`, `train_all(X_train, y_train, X_test, y_test) -> dict`.
+   - Include a baseline and task-appropriate models.
+   - Save each `model.pkl`, each `metrics.json`, and `artifacts/models/comparison.json`.
+4. Structurally review: run `/ml-code-review` with target=`src/ml_agents_trial/models/`. Return to implementation if FAIL.
+5. ML quality review: run `/ml-quality-review` with phase=`models`, target=`src/ml_agents_trial/models/`. Return to implementation if FAIL.
+6. Run:
 
 ```bash
 .venv/bin/python src/ml_agents_trial/models/trainer.py ${input:target_column:MedHouseVal}
 ```
 
-9. Run `uv run ruff check src/ tests/`.
-10. Commit only `src/ml_agents_trial/models/` with `feat(models): generate model configs and trainer`.
-11. Report comparison table, best model, commit hash, and next step.
+7. Run `uv run ruff check src/ tests/`.
+8. Commit only `src/ml_agents_trial/models/` with:
+
+```bash
+git add src/ml_agents_trial/models/
+STAGED=$(git diff --name-only --cached | grep 'ml_agents_trial/models/' | sed 's|src/ml_agents_trial/models/||')
+git commit -m "feat(models): generate model configs and trainer
+
+$(echo "$STAGED" | sed 's/^/- /')"
+```
+
+9. Report comparison table, best model, commit hash, and next step (`/ml-evaluate`).

@@ -9,15 +9,17 @@ Use this skill to review generated Python phase code. Do not edit files while ac
 
 ## Checks
 
-- Import boundary:
-  - `ml_agents_trial.core.*` is allowed.
+- Import boundary (core module name from copilot-instructions.md > プロジェクト設定):
+  - `{core module}.*` is allowed.
   - External packages are allowed.
-  - Same-package imports are allowed.
+  - Same phase-directory imports are allowed.
   - Cross-imports between generated phase directories are not allowed.
+- Directory-based checking:
+  - When given a directory, enumerate all `.py` files with `find [dir] -name "*.py" -not -path "*__pycache__*" | sort`.
+  - Check every file for import boundary and ruff.
+  - At least one file per directory must contain `if __name__ == "__main__":` (utility files do not need it).
 - Ruff:
   - Run `uv run ruff check [target]` or the command-specific ruff check.
-- Entrypoint:
-  - For each generated phase directory, at least one file must contain `if __name__ == "__main__":`.
 - Plot backend:
   - Plot modules must call `matplotlib.use("Agg")` before importing `matplotlib.pyplot`.
 - Public functions should keep type hints.
